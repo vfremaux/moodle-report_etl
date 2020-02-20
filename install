@@ -1,0 +1,53 @@
+Generic ETL Infrastructure for Moodle 
+#####################################
+
+This installer refers only to the Moodle side installation of the ETL extraction
+infrastructure.
+
+The install process is very simple, and needs a three point very small customization
+in order for administration reports to accept a sub-plugins structure.
+
+The ETL customization has been carefully checked for needing a minimal footprint
+in the core so upgrade will be very easy to ensure.
+
+Insert point 1 : 
+
+in lib/locallib.php, anywhere, add the include for additional localization functions
+
+// PATCH : Integrating reports subplugins
+include $CFG->dirroot.'/admin/report/etl/localreportslib.php';
+// \PATCH
+
+Insert point 2 : in order to allow administration upgrade discover the report sub plugins,
+patch the admin/index.php around line 490 (sequence of upgrade calls). The patch is non disruptive
+in case of incomplete integration.
+
+/// PATCH Reports subplugins
+/// get sub plugins in reports
+    if (function_exists('upgrade_report_plugins')){
+        upgrade_report_plugins("$CFG->wwwroot/$CFG->admin/index.php");  // Return here afterwards
+    }
+/// \\PATCH Report sub plugins
+
+Available plugins
+#################
+
+Trimane Open Analytics for Moodle
+*********************************
+
+Trimane Open Aanalytics for Moodle is a powerful Data analysis application
+using state of the art "Business Intelligence" technologies
+for analysing activity of a Moodle platform.
+
+I provides a complete ETL (Extraction Transform and Load) process
+using Pentaho open source components, stores datawarehouse in a MySQL
+database, and provides a complete Web based Report manager and
+configurator.
+
+Trimane Open Analytics for Moodle applications runs on J2EE platforms on TomCat, and is provided
+as a full installable suite.
+
+documentation on http://www.valeisti.fr/index.php/documentation/TOA
+
+contact valery@valeisti.fr or lionel.rigaud@trimane.fr for availability.
+ 

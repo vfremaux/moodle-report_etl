@@ -1,0 +1,16 @@
+ETL for Moodle
+***********************************
+
+ETL for moodle provides a standard and generic way to export documented data extraction to an external
+analysis software.
+
+ETL is a report and has some subplugins for adapting the output to each external LRS recorder. This is
+not natively supported by moodle but needs a very little change in a core library to allow subplugins support:
+
+in /lib/classes/component.php,
+
+replace line 48 with :
+
+    protected static $supportsubplugins = array('mod', 'editor', 'tool', 'local', 'report');
+
+this should be done BEFORE plugin installation so subplugins setup can be run at install time.
